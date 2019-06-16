@@ -1,28 +1,22 @@
 package com.example.tomek.magicwizards;
 
-import android.content.Intent;
-import android.gesture.GestureStroke;
-import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;;
-import android.os.Bundle;
+import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
+import android.gesture.GestureStroke;
 import android.gesture.Prediction;
-
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import android.gesture.Gesture;
 import java.util.ArrayList;
 import java.util.List;
+
+;
 
 /**  Główna klasa generujaca główny ekran z gra
  *
@@ -153,7 +147,7 @@ public class CustomGesturesActivity extends AI implements OnGesturePerformedList
                 HP=HP-hp_tmp;
                 AIDamageView.setText("HP GRACZA: " + String.valueOf(HP));}
         }
-
+        changeHPonHit();
         if(HP<0)
             setContentView(R.layout.activity_lost);
         if(HP_AI<0)
@@ -164,11 +158,48 @@ public class CustomGesturesActivity extends AI implements OnGesturePerformedList
             // TODO Zmienić na Integer
             //resultView.setText("0");
         }
+
+
     }
 
     /*public static void SetOpenGLCooldown()
     {
         currTimeInMs = System.currentTimeMillis();
     }*/
+    /* Funkcja odpowiedzialna za zmianę ikonki HP poszczegolnego gracza
+    * imageView i ImageView2 odpowiedzialne za graczy
+    * Brokenhp i else istnieje tylko dlatego, że jest to exception przed crashem, jesli w jakis sposob wartosc zmiennej HP lub HP_AI jest... dzwina*/
+    public void changeHPonHit(){
+        ImageView imageView = (ImageView) findViewById(R.id.imageView3);
+        ImageView imageView2 = (ImageView) findViewById(R.id.imageView4);
+
+        if(HP > 250)
+        {
+            imageView.setImageResource(R.drawable.fullhp);
+        }
+        else if(HP >= 120 && HP <= 250){
+            imageView.setImageResource(R.drawable.halfhp);
+        }
+        else if(HP <= 120){
+            imageView.setImageResource(R.drawable.lowhp);
+        }
+        else{
+            imageView.setImageResource(R.drawable.brokenhp);
+        }
+
+        if(HP_AI > 250)
+        {
+            imageView2.setImageResource(R.drawable.fullhp);
+        }
+        else if(HP_AI >= 120 && HP_AI <= 250){
+            imageView2.setImageResource(R.drawable.halfhp);
+        }
+        else if(HP_AI <= 120){
+            imageView2.setImageResource(R.drawable.lowhp);
+        }
+        else{
+            imageView2.setImageResource(R.drawable.brokenhp);
+        }
+    }
 
 }
